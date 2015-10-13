@@ -1,0 +1,180 @@
+//
+//  MLYQTableViewController.swift
+//  MLYQ
+//
+//  Created by Andy on 15/9/22.
+//  Copyright © 2015年 xiaoweigeWorking. All rights reserved.
+//
+
+import UIKit
+
+struct TableViewConstant {
+    static var CellInd = "mlyqTableCell"
+}
+
+struct StoryBoardConstants {
+    static var LuXianDetail = "storyIDLuXianDetail"
+    static var Main = "Main"
+    static var CloseNotfi = "CloseV"
+}
+
+class MLYQTableViewController: UITableViewController
+    ,UIViewControllerTransitioningDelegate,UISearchBarDelegate
+{
+    
+    
+    let tableData = ["北京到延庆骑行路线及沿途美食。","延庆到百里山水画廊骑行路线及沿途美食。","延庆到四季花海骑行路行及沿途美食","延庆八达岭骑行路行及沿途美食","延庆到柳构骑行路行及沿途美食","延庆八达岭骑行路行及沿途美食","延庆到四季花海骑行路行及沿途美食","延庆八达岭骑行路行及沿途美食","延庆八达岭骑行路行及沿途美食","延庆八达岭骑行路行及沿途美食"]
+    
+    let dataURL = ["luxian1","luxian2","luxian3","luxian1","luxian2","luxian3","luxian1","luxian2","luxian3","luxian1","luxian2","luxian3"]
+    let dataTile = ["北京－>延庆","延庆－>百里山水画廊","延庆－>四季花海","延庆－>八达岭","延庆－>柳构","延庆－>八达岭","延庆－>八达岭","延庆－>八达岭","延庆－>八达岭","延庆－>八达岭"]
+    
+    let timeHost = ["骑行耗费时间:4小时30分","骑行耗费时间:2小时30分","骑行耗费时间:2小时50分","骑行耗费时间:2小时10分","骑行耗费时间:1小时20分","骑行耗费时间:2小时10分","骑行耗费时间:2小时10分","骑行耗费时间:2小时10分","骑行耗费时间:2小时10分","骑行耗费时间:2小时10分"]
+    
+    override func viewWillAppear(animated: Bool) {
+        searchBarView.barTintColor = UIColor.whiteColor()
+    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.searchBarView.delegate = self
+//        tableView.translatesAutoresizingMaskIntoConstraints = true
+//        refresh()
+        
+        // Uncomment the following line to preserve selection between presentations
+        // self.clearsSelectionOnViewWillAppear = false
+
+        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+
+    func refresh() {
+        refreshControl?.beginRefreshing()
+        refreshControl?.endRefreshing()
+//        refresh(refreshControl)
+    }
+    
+    @IBOutlet weak var searchBarView: UISearchBar!
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchBarView.resignFirstResponder()
+    }
+    
+    override func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        searchBarView.resignFirstResponder()
+    }
+
+    // MARK: - Table view data source
+
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return tableData.count
+    }
+
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(TableViewConstant.CellInd, forIndexPath: indexPath)
+        if let yqCell = cell as? MLYQTableViewCell{
+            yqCell.title = dataTile[indexPath.row]
+            yqCell.detailTitle = tableData[indexPath.row]
+            yqCell.imageName = dataURL[indexPath.row]
+        }else{
+            cell.textLabel?.text = dataTile[indexPath.row]
+            cell.detailTextLabel?.text = tableData[indexPath.row]
+        }
+        
+        return cell
+    }
+    
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        if cell is MLYQTableViewCell{
+            let storyboard = UIStoryboard(name: StoryBoardConstants.Main, bundle: nil)
+            let luXianViewControl = storyboard.instantiateViewControllerWithIdentifier(StoryBoardConstants.LuXianDetail)
+            if let luXianControl = luXianViewControl as? LuXianDetailViewControler{
+                luXianControl.imageStr = dataURL[indexPath.row]
+                luXianControl.jeiShaoStr = dataTile[indexPath.row]
+                luXianControl.luXianDetailStr = tableData[indexPath.row]
+                luXianControl.timeStr = timeHost[indexPath.row]
+                luXianControl.transitioningDelegate = self
+//                trans.addPopGesture(luXianControl)
+            
+                self.presentViewController(luXianControl, animated: true,completion: nil)
+                let notif = NSNotificationCenter.defaultCenter()
+                notif.addObserver(self, selector: "close", name: StoryBoardConstants.CloseNotfi, object: nil)
+                
+            }
+        }
+    }
+        
+    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return KYPushTransition()
+    }
+    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return KYPopTransition()
+    }
+    
+//    func interactionControllerForDismissal(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+//        return trans.interacting ? trans : nil
+//    }
+    
+    func close(){
+        self.dismissViewControllerAnimated(true){
+           self.modalTransitionStyle = UIModalTransitionStyle.PartialCurl
+        }
+        let notif = NSNotificationCenter.defaultCenter()
+        notif.removeObserver(self, name: StoryBoardConstants.CloseNotfi, object: nil)
+    }
+    
+    
+
+
+    /*
+    // Override to support conditional editing of the table view.
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        // Return false if you do not want the specified item to be editable.
+        return true
+    }
+    */
+
+    /*
+    // Override to support editing the table view.
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            // Delete the row from the data source
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        } else if editingStyle == .Insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+        }    
+    }
+    */
+
+    /*
+    // Override to support rearranging the table view.
+    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
+
+    }
+    */
+
+    /*
+    // Override to support conditional rearranging of the table view.
+    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        // Return false if you do not want the item to be re-orderable.
+        return true
+    }
+    */
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
+}
