@@ -6,3 +6,5 @@
 #import "KYPushTransition.h"
 #import "PPImageScrollingTableViewCell.h"
 #import "PPImageScrollingTableViewCell.h"
+#import "MLPhotoBrowserViewController.h"
+#import "MLPhotoBrowserPhoto.h"

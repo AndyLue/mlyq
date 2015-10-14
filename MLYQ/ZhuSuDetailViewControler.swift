@@ -10,7 +10,7 @@
 import UIKit
 
 
-class ZhuSuDetailViewControler: UIViewController,UITableViewDataSource,UITableViewDelegate,PPImageScrollingTableViewCellDelegate{
+class ZhuSuDetailViewControler: UIViewController,UITableViewDataSource,UITableViewDelegate,PPImageScrollingTableViewCellDelegate,MLPhotoBrowserViewControllerDelegate{
     
     
     override func viewDidLoad() {
@@ -81,7 +81,42 @@ class ZhuSuDetailViewControler: UIViewController,UITableViewDataSource,UITableVi
     }
     
     func scrollingTableViewCell(scrollingTableViewCell: PPImageScrollingTableViewCell!, didSelectImageAtIndexPath indexPathOfImage: NSIndexPath!, atCategoryRowIndex categoryRowIndex: Int) {
-        print("fff")
+        // 图片游览器
+        let photoBrowser = MLPhotoBrowserViewController()
+        // 缩放动画
+        photoBrowser.status = UIViewAnimationAnimationStatus.Zoom
+        // 可以删除
+        photoBrowser.editing = false;
+        // 数据源/delegate
+        photoBrowser.delegate = self;
+        // 同样支持数据源/DataSource
+        photoBrowser.photos = photos(categoryRowIndex);
+        // 当前选中的值
+        photoBrowser.currentIndexPath = indexPathOfImage;
+        // 展示控制器
+        photoBrowser.showPickerVc(self)
+    }
+    
+    
+    func photos (types : Int) -> [MLPhotoBrowserPhoto]{
+        var array = [MLPhotoBrowserPhoto]()
+        if(types == 0){
+            let ss = zsimages["images"]
+            for value in ss! {
+                let obj = MLPhotoBrowserPhoto()
+                obj.photoImage = UIImage(named: value["name"]!)
+                array.append(obj)
+            }
+        }else{
+            let ss = msimages["images"]
+            for value in ss! {
+                let obj = MLPhotoBrowserPhoto()
+                obj.photoImage = UIImage(named: value["name"]!)
+                array.append(obj)
+            }
+        }
+        return array;
+
     }
     
     

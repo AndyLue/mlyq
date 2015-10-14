@@ -19,10 +19,9 @@
     UIViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
 
     UIView *containerView = [transitionContext containerView];
-    NSTimeInterval duration = [self transitionDuration:transitionContext];
 
     // Get a snapshot of the thing cell we're transitioning from
-//    UIViewController *cell = [fromViewController.collectionView cellForItemAtIndexPath:[[fromViewController.collectionView indexPathsForSelectedItems] firstObject]];
+//    UIViewController *cell = [fromViewController.view cellForItemAtIndexPath:[[fromViewController.view indexPathsForSelectedItems] firstObject]];
     UIView *cellImageSnapshot = [containerView snapshotViewAfterScreenUpdates:NO];
     cellImageSnapshot.frame = [containerView convertRect:containerView.frame fromView:containerView.superview];
     containerView.hidden = YES;
@@ -35,6 +34,8 @@
     [containerView addSubview:toViewController.view];
     [containerView addSubview:cellImageSnapshot];
 
+    NSTimeInterval duration = [self transitionDuration:transitionContext];
+    
     [UIView animateWithDuration:duration animations:^{
         // Fade in the second view controller's view
         toViewController.view.alpha = 1.0;
