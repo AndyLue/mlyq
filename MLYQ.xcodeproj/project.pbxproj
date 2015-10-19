@@ -49,6 +49,7 @@
 		A18CB0931BCD1B5B00809494 /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A18CB0831BCD1B5B00809494 /* UIImageView+HighlightedWebCache.m */; settings = {ASSET_TAGS = (); }; };
 		A18CB0941BCD1B5B00809494 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A18CB0851BCD1B5B00809494 /* UIImageView+WebCache.m */; settings = {ASSET_TAGS = (); }; };
 		A18CB0951BCD1B5B00809494 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A18CB0871BCD1B5B00809494 /* UIView+WebCacheOperation.m */; settings = {ASSET_TAGS = (); }; };
+		A1D147FB1BCE3A6200B4AC5F /* MeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D147FA1BCE3A6200B4AC5F /* MeTableViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		A1D5CD621BCBCCDD008F8C74 /* DSLTransitionFromFirstToSecond.m in Sources */ = {isa = PBXBuildFile; fileRef = A1D5CD5F1BCBCCDD008F8C74 /* DSLTransitionFromFirstToSecond.m */; settings = {ASSET_TAGS = (); }; };
 		A1D5CD631BCBCCDD008F8C74 /* DSLTransitionFromSecondToFirst.m in Sources */ = {isa = PBXBuildFile; fileRef = A1D5CD611BCBCCDD008F8C74 /* DSLTransitionFromSecondToFirst.m */; settings = {ASSET_TAGS = (); }; };
 		A1F1E5F41B998A8B00C537F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F1E5F31B998A8B00C537F5 /* AppDelegate.swift */; };
@@ -147,6 +148,7 @@
 		A18CB0851BCD1B5B00809494 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		A18CB0861BCD1B5B00809494 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		A18CB0871BCD1B5B00809494 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
+		A1D147FA1BCE3A6200B4AC5F /* MeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeTableViewController.swift; sourceTree = "<group>"; };
 		A1D5CD5E1BCBCCDD008F8C74 /* DSLTransitionFromFirstToSecond.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSLTransitionFromFirstToSecond.h; sourceTree = "<group>"; };
 		A1D5CD5F1BCBCCDD008F8C74 /* DSLTransitionFromFirstToSecond.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSLTransitionFromFirstToSecond.m; sourceTree = "<group>"; };
 		A1D5CD601BCBCCDD008F8C74 /* DSLTransitionFromSecondToFirst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSLTransitionFromSecondToFirst.h; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 		A11D63241BC8C02C00316021 /* me */ = {
 			isa = PBXGroup;
 			children = (
+				A1D147FA1BCE3A6200B4AC5F /* MeTableViewController.swift */,
 			);
 			name = me;
 			sourceTree = "<group>";
@@ -611,6 +614,7 @@
 				A18CB0901BCD1B5B00809494 /* UIButton+WebCache.m in Sources */,
 				A138CCF31BC7BD560064F409 /* KYPushTransition.m in Sources */,
 				A18CB08C1BCD1B5B00809494 /* SDWebImageDownloader.m in Sources */,
+				A1D147FB1BCE3A6200B4AC5F /* MeTableViewController.swift in Sources */,
 				A18CB0881BCD1B5B00809494 /* NSData+ImageContentType.m in Sources */,
 				A1F463E61BC9060200315634 /* PPCollectionViewCell.m in Sources */,
 				A18CB04B1BCD133F00809494 /* MLPhotoBrowserPhotoScrollView.m in Sources */,

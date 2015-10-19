@@ -84,7 +84,7 @@ class ZhuSuDetailViewControler: UIViewController,UITableViewDataSource,UITableVi
         // 图片游览器
         let photoBrowser = MLPhotoBrowserViewController()
         // 缩放动画
-        photoBrowser.status = UIViewAnimationAnimationStatus.Zoom
+        photoBrowser.status = UIViewAnimationAnimationStatus.Fade
         // 可以删除
         photoBrowser.editing = false;
         // 数据源/delegate
@@ -104,14 +104,18 @@ class ZhuSuDetailViewControler: UIViewController,UITableViewDataSource,UITableVi
             let ss = zsimages["images"]
             for value in ss! {
                 let obj = MLPhotoBrowserPhoto()
-                obj.photoImage = UIImage(named: value["name"]!)
+                let image = UIImage(named: value["name"]!)
+                obj.photoImage = image
+                obj.toView = UIImageView(image : image)
                 array.append(obj)
             }
         }else{
             let ss = msimages["images"]
             for value in ss! {
                 let obj = MLPhotoBrowserPhoto()
-                obj.photoImage = UIImage(named: value["name"]!)
+                let image = UIImage(named: value["name"]!)
+                obj.photoImage = image
+                obj.toView = UIImageView(image : image)
                 array.append(obj)
             }
         }
