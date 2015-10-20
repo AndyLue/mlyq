@@ -74,7 +74,7 @@ class MLYQMainViewController: UICollectionViewController,UICollectionViewDelegat
                 if(indexPath.row == 6){
                     let but = UIButton()
                     but.frame = cell.bounds
-                    but.contentMode = UIViewContentMode.Right
+                    but.contentMode = UIViewContentMode.ScaleToFill
                     but.setTitle("更多", forState: UIControlState.Normal)
                     but.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
                     but.titleLabel?.font = UIFont(name:"AmericanTypewriter-Bold", size: 20)
@@ -82,12 +82,33 @@ class MLYQMainViewController: UICollectionViewController,UICollectionViewDelegat
                 }else{
                     let uiImage = UIImage(named: pictures[indexPath.item]["pic"]!)
                     let uiImageView = UIImageView(image: uiImage)
-                    uiImageView.frame = cell.bounds
+//                    uiImageView.frame = cell.bounds
                     uiImageView.layer.cornerRadius = 4
                     uiImageView.layer.masksToBounds = true
                     uiImageView.contentMode = UIViewContentMode.ScaleToFill
                     uiImageView.autoresizesSubviews = true
                     cell.contentView.addSubview(uiImageView);
+//                    uiImageView.translatesAutoresizingMaskIntoConstraints = false
+                    //logoImageView左侧与父视图左侧对齐
+                    let leftConstraint = NSLayoutConstraint.init(item: uiImageView, attribute: NSLayoutAttribute.Leading, relatedBy: NSLayoutRelation.Equal, toItem: cell.contentView, attribute: NSLayoutAttribute.Leading, multiplier: 1.0, constant: 0.0)
+                    leftConstraint.active = true
+                    //logoImageView右侧与父视图右侧对齐
+                    let rightConstraint = NSLayoutConstraint.init(item: uiImageView, attribute: NSLayoutAttribute.Trailing, relatedBy: NSLayoutRelation.Equal, toItem: cell.contentView, attribute: NSLayoutAttribute.Trailing, multiplier: 1.0, constant: 0.0)
+                    rightConstraint.active = true
+                    //logoImageView顶部与父视图顶部对齐
+                    let topConstraint = NSLayoutConstraint.init(item: uiImageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: cell.contentView, attribute: NSLayoutAttribute.Top, multiplier: 1.0, constant: 0.0)
+                    
+                    //logoImageView高度为父视图高度一半
+                    let bottomConstraint = NSLayoutConstraint.init(item: uiImageView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: cell.contentView, attribute: NSLayoutAttribute.Bottom, multiplier: 1.0, constant: 0.0)
+                    bottomConstraint.active = true
+                    //iOS 6.0或者7.0调用addConstraints
+                    //    [self.view addConstraints:@[leftConstraint, rightConstraint, topConstraint, heightConstraint]];
+
+                    uiImageView.translatesAutoresizingMaskIntoConstraints = false
+                    
+                    NSLayoutConstraint.activateConstraints([leftConstraint,rightConstraint,topConstraint,bottomConstraint])
+                    
+                    
                 }
             }
            return cell
@@ -95,7 +116,6 @@ class MLYQMainViewController: UICollectionViewController,UICollectionViewDelegat
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         let coomentWidth = collectionView.frame.size.width/2-12
-        
         if indexPath.row == 0 {
             return CGSize(width: coomentWidth, height: collectionView.frame.size.height*0.4)
         }else if indexPath.row == 1 {
